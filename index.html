@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<!--
+    look at
+
+    https://www.nczonline.net/blog/2012/05/08/working-with-files-in-javascript-part-1/
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="app.js"></script>
+
+    <script>
+    </script>
+</head>
+<body>
+        <div style="overflow-y:auto; width:80%; height: 98vh; float: left;">
+            <canvas id="atlascanvas" width="128" height="128"></canvas>
+        </div>
+    <div style="width:15%; float:right;">
+
+        <a href="#" id="downloadclick"><img src="images/DownloadButton.jpg" /></a>
+        <h3 style="font-size:24px"><input style="transform:scale(2)" type="checkbox" id="pow2" checked onclick="checkPower2();" />&nbsp;&nbsp; Size Power of 2</h3>
+        <div id="droparea" style="width: 200px; height: 200px; vertical-align: central; text-align: center">
+            <img src="images/Upload.jpg" />
+        </div>
+        <div id="imagelist" style="overflow-y:auto; height: 68vh;">
+        </div>
+    </div>
+    <textarea id="jsontxt" rows="40" cols="100" style="display:none">
+    </textarea>
+        <script>
+
+            function checkPower2() {
+                var pow2 = document.getElementById("pow2");
+                if (pow2.checked == true) {
+                    SpritePacker.SINGLETON.CanvasPow2(true);
+                }
+                else {
+                    SpritePacker.SINGLETON.CanvasPow2(false);
+                }
+            }
+
+            function downloadSetup() {
+                renderSetup(download);
+            }
+
+            function download() {
+                var dt = document.getElementById("atlascanvas").toDataURL('data:image/png');
+                var link = document.createElement("A");  //.creatElement("a");
+                link.download = "atlas.png";
+                link.href = dt;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                delete link;
+
+                // THIS IS THE TEXT SAVING PART
+                var jsontxt = document.getElementById("jsontxt");
+                var textFileAsBlob = new Blob([jsontxt.textContent], { type: 'text/plain' });
+
+                var text_link = document.createElement("A");  
+                text_link.download = "atlas.json";
+                window.URL = window.URL || window.webkitURL;
+                text_link.href = window.URL.createObjectURL(textFileAsBlob);
+                document.body.appendChild(text_link);
+                text_link.click();
+                document.body.removeChild(text_link);
+                delete text_link;
+
+                renderPNG = false;
+                readyToRender = false;
+
+            };
+            var downloadLnk = document.getElementById("downloadclick");
+            downloadLnk.addEventListener('click', downloadSetup, false);
+
+        var droparea = document.getElementById("droparea");
+        droparea.ondragover = handledragover;
+        droparea.ondrop = handledrop;
+
+        function handledragover(e) {
+            e.preventDefault();
+        }
+
+
+        function handledrop(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var files = e.dataTransfer.files; // Array of all files
+            var file_count = 0;
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].type.match(/image.*/)) {
+                    var img = new Image();
+
+                    img.onload = function () {
+                        var img = this;
+                        SpritePacker.SINGLETON.addSprite(new Sprite(img));
+                        img.style.width = "150px";
+                        if (++file_count >= files.length) {
+                            SpritePacker.SINGLETON.package();
+                        }
+                    }
+
+                    img.src = window.URL.createObjectURL(files[i]);
+                    img.id = files[i].name;
+                    img.style.zIndex = 0;
+                    var imagelist = document.getElementById("imagelist");
+                    imagelist.appendChild(img);
+
+                    // DeleteButton.png
+                    
+                }
+            }
+        }
+        </script>
+    </div>
+</body>
+</html>
