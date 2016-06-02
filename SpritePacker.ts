@@ -237,6 +237,22 @@ class SpritePacker {
                 this.canvas.height = this._rightHeight;
             }
         }
+        while (this._leftHeight > this.canvas.height) {
+            if (this.pow2) {
+                this.canvas.height *= 2;
+            }
+            else {
+                this.canvas.height = this._leftHeight;
+            }
+        }
+
+        if (this._leftHeight > this._packHeight) {
+            this._packHeight = this._leftHeight;
+        }
+
+        if (this._rightHeight > this._packHeight) {
+            this._packHeight = this._rightHeight;
+        }
     }
 
     private _heightPackLeft = (unplaced: Array<Sprite>): void => {
