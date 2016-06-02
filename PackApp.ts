@@ -1,5 +1,20 @@
 ﻿///<reference path="./includes.ts"/>
 
+/*
+*   SPRITESTER IS AN HTML5 WEB APP THAT ALLOWS A USER TO GENERATE A TEXTURE ATLAS
+* FROM A WEB BROWSER.  I'M RELEASING IT UNDER THE MIT LICENSE AND DOCUMENTING IT 
+* ON MY WEBSITE typescriptgames.com
+* 
+*  TRY OUT THE APP ON http://www.spritester.com
+*  
+*  YOU CAN FIND TYPESCRIPT CODE THAT LOADS A TEXTURE ATLAS ON
+*  MY WEBSITE:
+*  http://www.typescriptgames.com
+*
+*  IF YOU HAVE ANY QUESTIONS, PLEASE TWEET ME @typescriptgames
+*/
+
+
 var ctx: CanvasRenderingContext2D;
 
 var renderPNG: boolean = false;
@@ -36,8 +51,6 @@ window.onload = () => {
     ctx = SpritePacker.SINGLETON.canvas.getContext("2d");
     gameLoop();
 }
-
-
 
 /*
 LIST OF POSSIBLE ALGORITHMS TO USE

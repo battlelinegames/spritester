@@ -1,4 +1,18 @@
-﻿class SpritePacker {
+﻿/*
+*  THIS IS THE MAIN SPRITESTER CLASS, IT TAKES A CANVAS AND ADDS
+*  TRIMMED IMAGES TO IT.  IT ALSO MANAGES GENERATING THE JSON
+*  FILE THAT IS USED BY A GAME OR OTHER APPLICATION TO DETERMINE
+*  WHERE THE IMAGES WERE PLACED.  
+* 
+*  TRY OUT THE APP ON http://www.spritester.com
+*  
+*  YOU CAN FIND TYPESCRIPT CODE THAT LOADS A TEXTURE ATLAS ON
+*  MY WEBSITE:
+*  http://www.typescriptgames.com
+*
+*  IF YOU HAVE ANY QUESTIONS, PLEASE TWEET ME @typescriptgames
+*/
+class SpritePacker {
 
     public static SINGLETON: SpritePacker = null;
     public static PADDING: number = 1;
@@ -172,6 +186,10 @@
 
         var jsondata: any = {};
         jsondata.frames = {};
+        jsondata.meta = {};
+        jsondata.meta.app = "http://www.spritester.com";
+        jsondata.meta.version = "0.3";
+
         for (var i: number = 0; i < this.spriteList.length; i++) {
             var temp_sprite: Sprite = this.spriteList[i];
             jsondata.frames[temp_sprite.name] = new Frame(new Rectangle(temp_sprite.x, temp_sprite.y,

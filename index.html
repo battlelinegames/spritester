@@ -1,13 +1,21 @@
-﻿<!DOCTYPE html>
-<!--
-    look at
+﻿<!--
+    Spritester is an HTML5 web based Texture Atlas Generator.  Drag your files into the app and click download, 
+    and you'll get a packed png file and the accompanying json file.  I'm releasing this code under the MIT License,
+    so feel free to do what you want with it, but you can't sue me.
 
-    https://www.nczonline.net/blog/2012/05/08/working-with-files-in-javascript-part-1/
+    If you have questions tweet @typescriptgames
+
+    I'll have tutorials and walk throughs of the code on www.typescriptgames.com
+
+    Thanks,
+    Rick Battagline
+    BattleLine Games LLC.
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
+    <title>Spritester - Texture Atlas Generator</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
     <script src="app.js"></script>
 
@@ -27,11 +35,19 @@
         </div>
         <div id="imagelist" style="overflow-y:auto; height: 68vh;">
         </div>
+        <h3 style="font-size:18px"><a href="http://www.typescriptgames.com">Tutorials on Typescript Games</a></h3>
+        <h3 style="font-size:16px">Tweet: @typescriptgames</h3>
     </div>
+    <h1>Spritester Texture Atlas Generator</h1>
+    <p>
+        This is a very basic implementation of an HTML5 Texture Atlas Generator.  Simply Drag images into the app, and click download when you're ready.  
+        This will download both a png file and a json file for use in a game. 
+    </p>
     <textarea id="jsontxt" rows="40" cols="100" style="display:none">
     </textarea>
         <script>
-
+            // IF THE USER CLICKS THE POWER OF 2 CHECKBOX, 
+            // WE SET THE SIZE TO A POWER OF TWO, OR TO JUST FIT THE IMAGES
             function checkPower2() {
                 var pow2 = document.getElementById("pow2");
                 if (pow2.checked == true) {
@@ -42,13 +58,15 @@
                 }
             }
 
+            // I'M USING A CALLBACK HERE SO I CAN SET THE BACKGROUND FROM MAGENTA TO TRANSPARENT
+            // BEFORE I RENDER OUT THE PNG FILE
             function downloadSetup() {
                 renderSetup(download);
             }
 
             function download() {
                 var dt = document.getElementById("atlascanvas").toDataURL('data:image/png');
-                var link = document.createElement("A");  //.creatElement("a");
+                var link = document.createElement("A");  
                 link.download = "atlas.png";
                 link.href = dt;
                 document.body.appendChild(link);
@@ -108,9 +126,6 @@
                     img.style.zIndex = 0;
                     var imagelist = document.getElementById("imagelist");
                     imagelist.appendChild(img);
-
-                    // DeleteButton.png
-                    
                 }
             }
         }
